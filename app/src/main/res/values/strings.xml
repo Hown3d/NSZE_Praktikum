@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Praktikum2</string>
+
+        <string-array name="Optionen_Immobilie">
+            <item>Kaufen</item>
+            <item>Mieten</item>
+        </string-array>
+
 </resources>

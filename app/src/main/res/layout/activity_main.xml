@@ -6,13 +6,50 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
+    <Button
+        android:id="@+id/button_makler"
+        android:layout_width="132dp"
+        android:layout_height="93dp"
+        android:layout_marginStart="224dp"
+        android:layout_marginTop="301dp"
+        android:layout_marginEnd="55dp"
+        android:layout_marginBottom="337dp"
+        android:text="Makler"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button_kunde"
+        android:layout_width="132dp"
+        android:layout_height="93dp"
+        android:layout_marginStart="49dp"
+        android:layout_marginTop="301dp"
+        android:layout_marginEnd="230dp"
+        android:layout_marginBottom="337dp"
+        android:text="Kunde"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/Title"
+        android:layout_width="351dp"
+        android:layout_height="72dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="84dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="575dp"
+        android:text="ImmobilienScout 25"
+        android:textAlignment="center"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
