@@ -3,6 +3,7 @@ package com.example.praktikum2;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -23,6 +24,7 @@ public class ImmobilieAnlegen extends AppCompatActivity {
             int anzZimmer, groeße;
             String standort, bezeichnung;
             double maklerProv, preis;
+            Drawable bild;
 
             anzZimmer = Integer.parseInt(editText_anzZimmer.getText().toString());
             groeße = Integer.parseInt(editText_groeße.getText().toString());
@@ -30,8 +32,9 @@ public class ImmobilieAnlegen extends AppCompatActivity {
             bezeichnung = editText_anzZimmer.getText().toString();
             maklerProv = Double.parseDouble(editText_maklerProv.getText().toString());
             preis = Double.parseDouble(editText_preis.getText().toString());
+            bild = fotoButton.getDrawable();
 
-            Immobilien neueImmobilie = new Immobilien(groeße, anzZimmer, preis, maklerProv, bezeichnung, standort);
+            Immobilien neueImmobilie = new Immobilien(groeße, anzZimmer, preis, maklerProv, bezeichnung, standort, bild);
             makler.addImmobilie(neueImmobilie);
         }
     };
