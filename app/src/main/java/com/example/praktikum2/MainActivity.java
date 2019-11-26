@@ -31,10 +31,8 @@ public class MainActivity extends AppCompatActivity{
 
         }
         if(id == R.id.button_kunde) {
-            /* Johns Baustelle
             intent = new Intent(MainActivity.this, Kunde_Uebersicht.class);
             startActivity(intent);
-            */
         }
     }
 };
