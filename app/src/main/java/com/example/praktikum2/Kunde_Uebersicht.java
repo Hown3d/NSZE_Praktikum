@@ -11,8 +11,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.example.praktikum2.ui.Favoriten_Fragment;
-import com.example.praktikum2.ui.Kunde_Suchen_Fragment;
 import com.google.android.material.navigation.NavigationView;
 
 //Implementiert Listener um fragments bzw Activisions zu öffnen wenn auf ein item im drawer Menü geklickt wird
