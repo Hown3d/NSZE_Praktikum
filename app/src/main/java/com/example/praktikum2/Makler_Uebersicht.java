@@ -11,19 +11,20 @@ public class Makler_Uebersicht extends AppCompatActivity {
 
     private Button button_neueImmobilie, button_meineImmobilien;
     private Makler makler;
+    private Intent intent;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_makler__uebersicht);
-        Intent intent = getIntent();
+        intent = getIntent();
         if(intent.hasExtra("makler")) {
             makler = intent.getParcelableExtra("makler");
         }
         init();
     }
+    //ocl listener zum entscheiden, ob
     View.OnClickListener ocl = new View.OnClickListener() {
         public void onClick(View view) {
-            Intent intent;
             int id = view.getId();
             if(id == R.id.button_neueImmobilie) {
                 intent = new Intent(Makler_Uebersicht.this, ImmobilieAnlegen.class);
@@ -33,8 +34,8 @@ public class Makler_Uebersicht extends AppCompatActivity {
             }
             if(id == R.id.button_meineImmobilien) {
             intent = new Intent(Makler_Uebersicht.this, ImmobilienAnzeigen.class);
+            intent.putExtra("makler", makler);
             startActivity(intent);
-
             }
         }
     };
