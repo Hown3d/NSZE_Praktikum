@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Kunde_Uebersicht"></activity>
+        <activity android:name=".Kunde_Uebersicht"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".ImmobilienAnzeigen" />
         <activity android:name=".ImmobilieAnlegen" />
         <activity android:name=".Makler_Uebersicht" />
