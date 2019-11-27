@@ -13,7 +13,11 @@ public class Makler implements Parcelable {
     private ArrayList<Immobilien> meineImmobilien;
 
     public Makler() {
-        meineImmobilien = new ArrayList<Immobilien>();
+        meineImmobilien = new ArrayList<>();
+    }
+
+    public Makler(Parcel in) {
+        meineImmobilien = in.readArrayList(Immobilien.class.getClassLoader());
     }
 
     public void addImmobilie(Immobilien immobilie) {
@@ -22,7 +26,7 @@ public class Makler implements Parcelable {
 
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
         public Makler createFromParcel(Parcel in) {
-            return new Makler();
+            return new Makler(in);
         }
         public Makler[] newArray(int size) {
             return new Makler[size];
@@ -30,10 +34,13 @@ public class Makler implements Parcelable {
     };
 
     public void writeToParcel(Parcel dest, int flags) {
-
+        dest.writeList(meineImmobilien);
     }
-
     public int describeContents() {
         return 0;
+    }
+
+    public ArrayList<Immobilien> getMeineImmobilien() {
+        return meineImmobilien;
     }
 }

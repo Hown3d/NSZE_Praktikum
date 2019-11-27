@@ -1,15 +1,22 @@
 package com.example.praktikum2;
 
-import android.graphics.drawable.Drawable;
+import android.graphics.Bitmap;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class Immobilien {
+import java.util.ArrayList;
+
+public class Immobilien implements Parcelable {
 
     private int groeße, anzZimmer;
     private double preis, maklerProv;
     private String bezeichnung, standort;
-    private Drawable bild;
 
-    public Immobilien(int groeße, int anzZimmer, double preis, double maklerProv, String bezeichnung, String standort, Drawable bild) {
+    private Bitmap bild;
+
+    private char mieten_kaufen;
+
+    public Immobilien(int groeße, int anzZimmer, double preis, double maklerProv, String bezeichnung, String standort, char mieten_kaufen, Bitmap bild) {
         this.groeße = groeße;
         this.anzZimmer = anzZimmer;
         this.preis = preis;
@@ -17,7 +24,43 @@ public class Immobilien {
         this.bezeichnung = bezeichnung;
         this.standort = standort;
         this.bild = bild;
+        this.mieten_kaufen = mieten_kaufen;
     }
+
+    private Immobilien(Parcel in) {
+        groeße = in.readInt();
+        anzZimmer = in.readInt();
+        preis = in.readDouble();
+        maklerProv = in.readDouble();
+        bezeichnung = in.readString();
+        standort = in.readString();
+        bild = in.readParcelable(Bitmap.class.getClassLoader());
+        mieten_kaufen = in.readString().charAt(0);
+    }
+
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        public Immobilien createFromParcel(Parcel in) {
+            return new Immobilien(in);
+        }
+        public Immobilien[] newArray(int size) {
+            return new Immobilien[size];
+        }
+    };
+
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(groeße);
+        dest.writeInt(anzZimmer);
+        dest.writeDouble(preis);
+        dest.writeDouble(maklerProv);
+        dest.writeString(bezeichnung);
+        dest.writeString(standort);
+        dest.writeParcelable(bild, flags);
+        dest.writeString(String.valueOf(mieten_kaufen));
+    }
+    public int describeContents() {
+        return 0;
+    }
+
 
     public int getGroeße() {
         return groeße;
@@ -42,5 +85,14 @@ public class Immobilien {
     public String getStandort() {
         return standort;
     }
+
+    public char getMieten_kaufen() {
+        return mieten_kaufen;
+    }
+
+    public Bitmap getBild() {
+        return bild;
+    }
+
 
 }

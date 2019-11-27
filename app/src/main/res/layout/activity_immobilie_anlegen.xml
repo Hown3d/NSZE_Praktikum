@@ -16,14 +16,14 @@
         <TextView
             android:id="@+id/textView_ImmobilieErstellen"
             android:layout_width="match_parent"
-            android:layout_height="142dp"
+            android:layout_height="79dp"
             android:gravity="center"
             android:text="Immobilie erstellen"
             android:textSize="36sp" />
 
         <TableLayout
             android:layout_width="match_parent"
-            android:layout_height="535dp"
+            android:layout_height="482dp"
             android:gravity="top">
 
             <TableRow
@@ -246,7 +246,11 @@
                         android:id="@+id/fotoButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
                         android:layout_weight="1"
+                        android:clickable="true"
+                        android:cropToPadding="true"
+                        android:src="@drawable/default_foto"
                         tools:srcCompat="@tools:sample/avatars" />
 
                 </LinearLayout>
@@ -257,8 +261,10 @@
             android:id="@+id/button_commit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="Erstellen"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:visibility="visible" />
 
     </LinearLayout>
 
