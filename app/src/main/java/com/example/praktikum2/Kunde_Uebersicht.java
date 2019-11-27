@@ -10,16 +10,21 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 
-import com.example.praktikum2.ui.Favoriten_Fragment;
-import com.example.praktikum2.ui.Kunde_Suchen_Fragment;
+import com.example.praktikum2.ui.Interfaces.FragmentSearchListener;
 import com.google.android.material.navigation.NavigationView;
 
 //Implementiert Listener um fragments bzw Activisions zu öffnen wenn auf ein item im drawer Menü geklickt wird
-public class Kunde_Uebersicht extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class Kunde_Uebersicht extends AppCompatActivity implements FragmentSearchListener {
 
     //Navigation drawer
     private DrawerLayout drawer;
+
+    private Kunde_Suchen_Fragment suchen_fragment;
+    private Favoriten_Fragment favoriten_fragment;
+    private Suchergebnisse_Fragment suchergebnisse_fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +34,10 @@ public class Kunde_Uebersicht extends AppCompatActivity implements NavigationVie
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        suchen_fragment = new Kunde_Suchen_Fragment();
+        favoriten_fragment = new Favoriten_Fragment();
+        suchergebnisse_fragment = new Suchergebnisse_Fragment();
+
         //drawer finden und ihm ActionBarDrawerToggle hinzufügen
         drawer = findViewById(R.id.Kunde_Uebersicht);
         //Actiondrawertoggle sorgt dafür dass man das menü nicht nur per swipen öffnen kann sondern auch per knopf (vergleichbar zu ActionListener)
@@ -37,39 +46,43 @@ public class Kunde_Uebersicht extends AppCompatActivity implements NavigationVie
         //sorgt dafür dass sich das icon dreht während dem swipen
         toggle.syncState();
 
+
+
         //Navigantionview (Definiert in activity_Kunden_Übersicht.xml) finden und diese Klasse als Listener hinzufuegen
         NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            //Methode aus Interface dient zum erkennen wenn ein Menüeintrag geklickt wird und öffnet diesen
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                Intent intent;
+                //Switch-case mit Menuitem id je nach dem welcher Menüeintrag angeklickt wurde das entsprechende Fragment öffnen
+                switch (menuItem.getItemId()){
+                    case R.id.nav_Favoriten:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, favoriten_fragment).commit();
+                        break;
+                    case R.id.nav_Immobilie_Suchen:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, suchen_fragment).commit();
+                        break;
+                    case R.id.nav_home:
+                        intent = new Intent(Kunde_Uebersicht.this, MainActivity.class);
+                        startActivity(intent);
+                        break;
+                    default:
+                        break;
+                }
 
+                drawer.closeDrawer(GravityCompat.START);
+
+                return false;
+            }
+        });
+
+        //wenn die oncreate methode während der Laufzeit nochmal aufgerufen wird soll nicht immer wieder die Favoriten page geöffnet werden
+        //savedInstance == null ist nur beim 1. öffnen der App der fall
         if(savedInstanceState == null){
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new Favoriten_Fragment()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, favoriten_fragment).commit();
         }
 
-    }
-
-    //Methode aus Interface dient zum erkennen wenn ein Menüeintrag geklickt wird und öffnet diesen
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        Intent intent;
-        //Switch-case mit Menuitem id je nach dem welcher Menüeintrag angeklickt wurde das entsprechende Fragment öffnen
-        switch (menuItem.getItemId()){
-            case R.id.nav_Favoriten:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new Favoriten_Fragment()).commit();
-                break;
-            case R.id.nav_Immobilie_Suchen:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new Kunde_Suchen_Fragment()).commit();
-                break;
-            case R.id.nav_home:
-                intent = new Intent(Kunde_Uebersicht.this, MainActivity.class);
-                startActivity(intent);
-                break;
-            default:
-                break;
-        }
-
-        drawer.closeDrawer(GravityCompat.START);
-
-        return false;
     }
 
     //Falls zurück gerückt wird während das Menü offen ist soll das Menü geschlossen werden und nicht die Activity verlassen werden
@@ -78,10 +91,23 @@ public class Kunde_Uebersicht extends AppCompatActivity implements NavigationVie
         //wenn drawer sichtbar ist diesen schliessen ansonsten Activity verlassen
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
+        } else if(suchergebnisse_fragment != null && suchergebnisse_fragment.isVisible()){
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,suchen_fragment).commit();
+        }else {
             super.onBackPressed();
         }
     }
 
 
+    @Override
+    public void Onsearchclicked(View view) {
+        EditText edit_plz = view.findViewById(R.id.editText_standort_suchen);
+        if(edit_plz.getText().toString().matches("")){
+            suchergebnisse_fragment.setparams(0);
+        }else{
+            suchergebnisse_fragment.setparams(Integer.parseInt(edit_plz.getText().toString()));
+        }
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,suchergebnisse_fragment).commit();
+    }
 }
