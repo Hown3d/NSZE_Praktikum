@@ -1,13 +1,18 @@
 package com.example.praktikum2;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -16,7 +21,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 
-public class ImmobilieAnlegen extends AppCompatActivity {
+public class ImmobilieAnlegen extends Fragment {
 
     private Button button_commit;
     private EditText editText_bez, editText_groeße, editText_preis, editText_anzZimmer, editText_standort, editText_maklerProv;
@@ -52,13 +57,14 @@ public class ImmobilieAnlegen extends AppCompatActivity {
         }
     };
 
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_immobilie_anlegen);
-        intent = getIntent();
-        if(intent.hasExtra("makler")) {
-            makler = intent.getParcelableExtra("makler");
-        }
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        Bundle maklerbundle = getArguments();
+        makler = maklerbundle.getParcelable("makler");
+        return inflater.inflate(R.layout.activity_immobilie_anlegen, container, false);
+    }
+
+    public void onActivityCreated(Bundle maklerbundle) {
+        super.onActivityCreated(maklerbundle);
         init();
     }
 
@@ -80,30 +86,30 @@ public class ImmobilieAnlegen extends AppCompatActivity {
         Immobilien neueImmobilie = new Immobilien(groeße, anzZimmer, preis, maklerProv, bezeichnung, standort, mieten_kaufen, bild);
         makler.addImmobilie(neueImmobilie);
 
-        intent = new Intent(ImmobilieAnlegen.this, Makler_Uebersicht.class);
+        intent = new Intent(ImmobilieAnlegen.this.getActivity(), Makler_Uebersicht.class);
         intent.putExtra("makler", makler);
         startActivity(intent);
     }
 
     public void init() {
-        button_commit = findViewById(R.id.button_commit);
+        button_commit = getView().findViewById(R.id.button_commit);
         button_commit.setOnClickListener(ocl);
 
-        mieten_kaufen_spinner = findViewById(R.id.spinner_mieten_kaufen);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.Optionen_Immobilie, android.R.layout.simple_spinner_item);
+        mieten_kaufen_spinner = getView().findViewById(R.id.spinner_mieten_kaufen);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getActivity(), R.array.Optionen_Immobilie, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mieten_kaufen_spinner.setAdapter(adapter);
         mieten_kaufen_spinner.setOnItemSelectedListener(spinnerocl);
 
-        fotoButton = findViewById(R.id.fotoButton);
+        fotoButton = getView().findViewById(R.id.fotoButton);
         fotoButton.setOnClickListener(ocl);
 
-        editText_bez = findViewById(R.id.editText_bez);
-        editText_groeße = findViewById(R.id.editText_groeße);
-        editText_preis = findViewById(R.id.editText_preis);
-        editText_anzZimmer = findViewById(R.id.editText_anzZimmer);
-        editText_standort = findViewById(R.id.editText_standort);
-        editText_maklerProv = findViewById(R.id.editText_maklerprov);
+        editText_bez = getView().findViewById(R.id.editText_bez);
+        editText_groeße = getView().findViewById(R.id.editText_groeße);
+        editText_preis = getView().findViewById(R.id.editText_preis);
+        editText_anzZimmer = getView().findViewById(R.id.editText_anzZimmer);
+        editText_standort = getView().findViewById(R.id.editText_standort);
+        editText_maklerProv = getView().findViewById(R.id.editText_maklerprov);
 
     }
 }

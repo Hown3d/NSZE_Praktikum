@@ -71,7 +71,6 @@ public class Kunde_Uebersicht extends AppCompatActivity implements NavigationVie
     }
 
     //Falls zurück gerückt wird während das Menü offen ist soll das Menü geschlossen werden und nicht die Activity verlassen werden
-    @Override
     public void onBackPressed() {
         //wenn drawer sichtbar ist diesen schliessen ansonsten Activity verlassen
         if (drawer.isDrawerOpen(GravityCompat.START)) {

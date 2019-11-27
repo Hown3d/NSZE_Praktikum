@@ -14,7 +14,8 @@
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".ImmobilienAnzeigen" />
         <activity android:name=".ImmobilieAnlegen" />
-        <activity android:name=".Makler_Uebersicht" />
+        <activity android:name=".Makler_Uebersicht"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

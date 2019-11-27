@@ -1,56 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/Makler_Uebersicht"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Makler_Uebersicht">
+    android:fitsSystemWindows="true"
+    tools:context=".Makler_Uebersicht"
+    tools:openDrawer="start">
 
+
+    <!--Navigation Drawer erstes LinearLayout beschreibt die Toolbar
+    da diese Activity ohne Actionbar auskommt
+    zweiter teil fügt die NavigationView hinzu (Inhalt steht in den Dateien auf die die Attribute
+    app:headerLayout und app:menu verweisen-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="top"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textView_Uebersicht"
-            android:layout_width="431dp"
-            android:layout_height="123dp"
-            android:gravity="center"
-            android:text="Übersicht"
-            android:textSize="36sp" />
-
-        <LinearLayout
-            android:id="@+id/linearLayout"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_makler"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
 
-            <Button
-                android:id="@+id/button_neueImmobilie"
-                android:layout_width="wrap_content"
-                android:layout_height="80dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="Neue Immobilie anlegen"
-                android:textSize="18sp" />
+        <FrameLayout
+            android:id="@+id/fragment_container_makler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
-            <Button
-                android:id="@+id/button_meineImmobilien"
-                android:layout_width="wrap_content"
-                android:layout_height="80dp"
-                android:layout_weight="1"
-                android:text="Meine Immobilien"
-                android:textSize="18sp" />
-
-        </LinearLayout>
     </LinearLayout>
 
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/barrier"
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view_makler"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:barrierDirection="left" />
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/nav_header_navigation__drawer__kunde"
+        app:menu="@menu/navigation_drawer_makler_menu" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.drawerlayout.widget.DrawerLayout>
