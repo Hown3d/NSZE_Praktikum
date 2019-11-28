@@ -47,7 +47,11 @@ public class ImmobilieAnlegen extends AppCompatActivity {
 
             }
             if(id == R.id.button_commit) {
-                createImmobilie();
+                try {
+                    createImmobilie();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
     };
@@ -62,7 +66,7 @@ public class ImmobilieAnlegen extends AppCompatActivity {
         init();
     }
 
-    public void createImmobilie() {
+    public void createImmobilie() throws Exception{
         int anzZimmer, groeße;
         String standort, bezeichnung;
         double maklerProv, preis;
