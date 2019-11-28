@@ -23,7 +23,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:showDividers="none"
-            android:stretchColumns="*">
+            android:stretchColumns="*"
+            android:visibility="invisible">
 
             <TableRow
                 android:layout_width="match_parent"
@@ -42,7 +43,7 @@
                         android:id="@+id/imageButton_meineImmo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        />
+                        android:src="@drawable/default_foto" />
 
                     <LinearLayout
                         android:layout_width="match_parent"

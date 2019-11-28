@@ -250,7 +250,7 @@
                         android:layout_weight="1"
                         android:clickable="true"
                         android:cropToPadding="true"
-                        tools:srcCompat="@tools:sample/avatars" />
+                        android:src="@drawable/default_foto" />
 
                 </LinearLayout>
             </TableRow>
