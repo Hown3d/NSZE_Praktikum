@@ -5,6 +5,7 @@
         <item>Kaufen</item>
         <item>Mieten</item>
     </string-array>
+
     <string name="title_activity_navigation__drawer__kunde">Navigation_Drawer_Kunde</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -15,9 +16,26 @@
     <string name="action_settings">Settings</string>
 
     <string name="menu_home">Home</string>
+
     <string name="menu_Immobilie_Suchen">Immobilie Suchen</string>
+
     <string name="menu_Favoriten">Favoriten</string>
     <string name="menu_Immobilie_Erstellen">Immobilie Erstellen</string>
     <string name="menu_Meine_Immobilien">Meine Immobilien</string>
 
+    <string name="Preis">Preis</string>
+    <string name="Preis_Hint">599</string>
+
+    <string name="Groesse">Größe (m²)</string>
+    <string name="Groesse_Hint">65</string>
+
+    <string name="Anzahl_Zimmer">Anzahl der Zimmer</string>
+    <string name="Anzahl_Zimmer_hint">3</string>
+
+    <string name="Mieten_kaufen">Mieten / Kaufen?</string>
+
+    <string name="Plz">Postleitzahl</string>
+    <string name="plz_Hint">65618</string>
+
+    <string name="suchen">Treffer gefunden</string>
 </resources>
