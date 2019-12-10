@@ -11,16 +11,14 @@ import androidx.fragment.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import com.google.android.material.navigation.NavigationView;
 
 public class Makler_Uebersicht extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
-    private Button button_neueImmobilie, button_meineImmobilien;
     private Makler makler;
     private Intent intent;
     private DrawerLayout drawer;
+    private Bundle maklerbundle;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,7 +27,6 @@ public class Makler_Uebersicht extends AppCompatActivity implements NavigationVi
         if(intent.hasExtra("makler")) {
             makler = intent.getParcelableExtra("makler");
         }
-
 
         Toolbar toolbar = findViewById(R.id.toolbar_makler);
         try {
@@ -51,42 +48,37 @@ public class Makler_Uebersicht extends AppCompatActivity implements NavigationVi
         NavigationView navigationView = findViewById(R.id.nav_view_makler);
         navigationView.setNavigationItemSelectedListener(this);
 
-        init();
+
+        if(savedInstanceState == null){
+            maklerbundle = new Bundle();
+            maklerbundle.putParcelable("makler", makler);
+            ImmobilienAnzeigen immobilienAnzeigen_fragment = new ImmobilienAnzeigen();
+            immobilienAnzeigen_fragment.setArguments(maklerbundle);
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_makler, immobilienAnzeigen_fragment).commit();
+        }
     }
-//    View.OnClickListener ocl = new View.OnClickListener() {
-//        public void onClick(View view) {
-//            int id = view.getId();
-//            if(id == R.id.button_neueImmobilie) {
-//                intent = new Intent(Makler_Uebersicht.this, ImmobilieAnlegen.class);
-//                intent.putExtra("makler", makler);
-//                startActivity(intent);
-//
-//            }
-//            if(id == R.id.button_meineImmobilien) {
-//            intent = new Intent(Makler_Uebersicht.this, ImmobilienAnzeigen.class);
-//            intent.putExtra("makler", makler);
-//            startActivity(intent);
-//            }
-//        }
-//    };
 
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         //Switch-case mit Menuitem id je nach dem welcher Menüeintrag angeklickt wurde das entsprechende Fragment öffnen
-        Bundle maklerbundle = new Bundle();
+        maklerbundle = new Bundle();
+        //Makler Objekt in das Bundle legen
+        maklerbundle.putParcelable("makler", makler);
         switch (menuItem.getItemId()){
             case R.id.nav_Meine_Immobilien:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_makler, new Favoriten_Fragment()).commit();
+                //Fragment erstellen
+                Fragment immobilienAnzeigen_fragment = new ImmobilienAnzeigen();
+                //Bundle mit Makler Objekt an das Fragment attachen
+                immobilienAnzeigen_fragment.setArguments(maklerbundle);
+                //neues Fragment mit altem ersetzen
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_makler, immobilienAnzeigen_fragment).commit();
                 break;
             case R.id.nav_Immobilie_Erstellen:
-                //Makler Objekt in das Bundle legen
-                maklerbundle.putParcelable("makler", makler);
                 //Fragment erstellen
                 Fragment immobilienAnlegen_fragment = new ImmobilieAnlegen();
                 //Bundle mit Makler Objekt an das Fragment attachen
                 immobilienAnlegen_fragment.setArguments(maklerbundle);
                 //neues Fragment mit altem ersetzen
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_makler, immobilienAnlegen_fragment).commit();
-
                 break;
             case R.id.nav_home_makler:
                 intent = new Intent(Makler_Uebersicht.this, MainActivity.class);
@@ -95,7 +87,6 @@ public class Makler_Uebersicht extends AppCompatActivity implements NavigationVi
             default:
                 break;
         }
-
         drawer.closeDrawer(GravityCompat.START);
 
         return false;
