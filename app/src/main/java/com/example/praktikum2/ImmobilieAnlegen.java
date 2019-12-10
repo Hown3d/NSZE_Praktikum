@@ -21,6 +21,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 
+import com.muddzdev.styleabletoast.StyleableToast;
+
 public class ImmobilieAnlegen extends Fragment {
 
     private Button button_commit;
@@ -55,7 +57,7 @@ public class ImmobilieAnlegen extends Fragment {
                 try {
                     createImmobilie();
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    StyleableToast.makeText(getContext(),"Fehlendes Attribut!", R.style.MissingArgumentToast).show();
                 }
             }
         }

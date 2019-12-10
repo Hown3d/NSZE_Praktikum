@@ -40,7 +40,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        app:headerLayout="@layout/nav_header_navigation__drawer__kunde"
+        app:headerLayout="@layout/nav_header_navigation__drawer__makler"
         app:menu="@menu/navigation_drawer_makler_menu" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

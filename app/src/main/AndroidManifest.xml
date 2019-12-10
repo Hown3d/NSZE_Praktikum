@@ -12,7 +12,9 @@
         <activity android:name=".ImmobilienAnzeigen_Detail"></activity>
         <activity android:name=".Kunde_Uebersicht"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".ImmobilienAnzeigen" />
+        <activity android:name=".ImmobilienAnzeigen"
+            android:icon="@drawable/ic_favorite_black_24dp"
+            android:label="Meine Immobilien"/>
         <activity android:name=".ImmobilieAnlegen" />
         <activity android:name=".Makler_Uebersicht"
             android:theme="@style/AppTheme.NoActionBar"/>

@@ -46,10 +46,10 @@ public class Makler implements Parcelable {
     }
 
     public void createTestImmobilien() {
-        meineImmobilien.add(new Immobilien(25, 2, 500.00,4, "Kleine StudentenWG", "Darmstadt", 'M', null));
-        meineImmobilien.add(new Immobilien(75, 4, 1750.50,2, "2 Zimmer Küche Bad", "Darmstadt", 'M', null));
-        //meineImmobilien.add(new Immobilien(5000, 50, 5000000.00,1.5, "Schloss Neuschwanstein", "Neuschwanstein", 'K', null));
-        //meineImmobilien.add(new Immobilien(300, 7, 2000.00,2, "Landhaus", "Selters", 'M', null));
-        //meineImmobilien.add(new Immobilien(500, 12, 100000.00,4, "Penthouse", "New York", 'K', null));
+        meineImmobilien.add(new Immobilien(25, 2, 500.00,4, "Kleine StudentenWG", "64347", 'M', null));
+        meineImmobilien.add(new Immobilien(75, 4, 1750.50,2, "2 Zimmer Küche Bad", "64283", 'M', null));
+        meineImmobilien.add(new Immobilien(5000, 50, 5000000.00,1.5, "Schloss Neuschwanstein", "87645", 'K', null));
+        meineImmobilien.add(new Immobilien(300, 7, 2000.00,2, "Landhaus", "65618", 'M', null));
+        meineImmobilien.add(new Immobilien(500, 12, 100000.00,4, "Penthouse", "10001", 'K', null));
     }
 }
