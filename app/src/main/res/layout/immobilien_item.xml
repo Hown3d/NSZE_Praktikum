@@ -19,7 +19,7 @@
             android:padding="2dp" />
 
 
-        <TextView
+        <!--<TextView
             android:id="@+id/meineImmo_bez"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -106,6 +106,135 @@
             android:padding="4dp"
             android:text="Maklerprov"
             android:textSize="20sp" />
+    -->
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:showDividers="none"
+            android:layout_toRightOf="@+id/imageView"
+            android:stretchColumns="*"
+            android:visibility="visible">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+                <LinearLayout
+                    android:id="@+id/immobilie_Layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:divider="?attr/dividerHorizontal"
+                        android:orientation="horizontal"
+                        android:showDividers="middle">
+
+                        <TextView
+                            android:id="@+id/meineImmo_bez"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="1.1dp"
+                            android:layout_weight="1"
+                            android:autoSizeTextType="uniform"
+                            android:gravity="center"
+                            android:text="@android:string/autofill"
+                            android:layout_toRightOf="@+id/imageView"
+                            android:textSize="20sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:divider="?attr/dividerHorizontal"
+                        android:orientation="horizontal"
+                        android:showDividers="middle">
+
+                        <TextView
+                            android:id="@+id/meineImmo_standort"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="1.1dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="@android:string/autofill"
+                            android:layout_toRightOf="@+id/imageView"
+                            android:textSize="20sp" />
+
+
+
+
+                        <TextView
+                            android:id="@+id/meineImmo_mieten_kaufen"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="1.1dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="@android:string/autofill"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:id="@+id/meineImmo_preis"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="1.1dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="@android:string/autofill"
+                            android:textSize="20sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:divider="?attr/dividerHorizontal"
+                        android:orientation="horizontal"
+                        android:showDividers="middle">
+
+                        <TextView
+                            android:id="@+id/meineImmo_anzZimmer"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="1.1mm"
+                            android:layout_weight="1"
+                            android:text="@android:string/autofill"
+                            android:textAlignment="center"
+                            android:layout_toRightOf="@+id/imageView"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:id="@+id/meineImmo_groeße"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="1.1dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="@android:string/autofill"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:id="@+id/meineImmo_maklerprov"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="1.1dp"
+                            android:layout_weight="1"
+                            android:autoSizeTextType="uniform"
+                            android:gravity="center"
+                            android:text="@android:string/autofill"
+                            android:textSize="20sp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </TableRow>
+
+        </TableLayout>
 
     </RelativeLayout>
 

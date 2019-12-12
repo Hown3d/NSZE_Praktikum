@@ -12,18 +12,19 @@ public class Immobilien implements Parcelable {
     private double preis, maklerProv;
     private String bezeichnung, standort;
 
-    private Bitmap bild;
+    //ist hier String, da der Dateipfad und nicht das Bild hinterlegt wird
+    private String bildpfad;
 
     private char mieten_kaufen;
 
-    public Immobilien(int groeße, int anzZimmer, double preis, double maklerProv, String bezeichnung, String standort, char mieten_kaufen, Bitmap bild) {
+    public Immobilien(int groeße, int anzZimmer, double preis, double maklerProv, String bezeichnung, String standort, char mieten_kaufen, String bildpfad) {
         this.groeße = groeße;
         this.anzZimmer = anzZimmer;
         this.preis = preis;
         this.maklerProv = maklerProv;
         this.bezeichnung = bezeichnung;
         this.standort = standort;
-        this.bild = bild;
+        this.bildpfad = bildpfad;
         this.mieten_kaufen = mieten_kaufen;
     }
 
@@ -34,7 +35,7 @@ public class Immobilien implements Parcelable {
         maklerProv = in.readDouble();
         bezeichnung = in.readString();
         standort = in.readString();
-        bild = in.readParcelable(Bitmap.class.getClassLoader());
+        bildpfad= in.readString();
         mieten_kaufen = in.readString().charAt(0);
     }
 
@@ -54,7 +55,7 @@ public class Immobilien implements Parcelable {
         dest.writeDouble(maklerProv);
         dest.writeString(bezeichnung);
         dest.writeString(standort);
-        dest.writeParcelable(bild, flags);
+        dest.writeString(bildpfad);
         dest.writeString(String.valueOf(mieten_kaufen));
     }
     public int describeContents() {
@@ -90,8 +91,8 @@ public class Immobilien implements Parcelable {
         return mieten_kaufen;
     }
 
-    public Bitmap getBild() {
-        return bild;
+    public String getBildPfad() {
+        return bildpfad;
     }
 
 

@@ -2,6 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.praktikum2">
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,15 +15,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ImmobilienAnzeigen_Detail"></activity>
-        <activity android:name=".Kunde_Uebersicht"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".ImmobilienAnzeigen"
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="photoprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"></meta-data>
+        </provider>
+
+        <activity android:name=".ImmobilienAnzeigen_Detail" />
+        <activity
+            android:name=".Kunde_Uebersicht"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ImmobilienAnzeigen"
             android:icon="@drawable/ic_favorite_black_24dp"
-            android:label="Meine Immobilien"/>
+            android:label="Meine Immobilien" />
         <activity android:name=".ImmobilieAnlegen" />
-        <activity android:name=".Makler_Uebersicht"
-            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".Makler_Uebersicht"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -3,13 +3,20 @@ package com.example.praktikum2;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.text.TextUtils;
+import android.util.LruCache;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,10 +27,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.muddzdev.styleabletoast.StyleableToast;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class ImmobilieAnlegen extends Fragment {
+
+    static final int REQUEST_TAKE_PHOTO = 1;
 
     private Button button_commit;
     private EditText editText_bez, editText_groeße, editText_preis, editText_anzZimmer, editText_standort, editText_maklerProv;
@@ -33,6 +48,78 @@ public class ImmobilieAnlegen extends Fragment {
     private Intent intent;
     char mieten_kaufen;
 
+    //PhotoIntent
+    String currentPhotoPath;
+
+    private void previewPicture() {
+        testCache();
+
+        Bitmap b = BitmapFactory.decodeFile(currentPhotoPath);
+        fotoButton.setImageBitmap(Bitmap.createScaledBitmap(b, 512, 512, false));
+    }
+
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Ensure that there's a camera activity to handle the intent
+        if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+            // Create the File where the photo should go
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+                System.out.println(photoFile.getAbsolutePath());
+            } catch (IOException ex) {
+                // Error occurred while creating the File
+                System.out.println("Exception dispatchTakePictureIntent");
+            }
+            // Continue only if the File was successfully created
+            // directory must exist!
+            if (photoFile != null) {
+                // System.out.println("Photo: " + photoFile.getAbsolutePath());
+                Uri photoURI = FileProvider.getUriForFile(getActivity(),
+                        "photoprovider",
+                        photoFile);
+
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+            }
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_TAKE_PHOTO && resultCode == MainActivity.RESULT_OK) {
+            Toast.makeText(getActivity().getApplicationContext(), "Foto aufgenommen", Toast.LENGTH_LONG).show();
+            previewPicture();
+        }
+    }
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        // Standard directory in which to place pictures that are available to
+        // the user. Note that this is primarily a convention for the top-level
+        // public directory, as the media scanner will find and collect pictures
+        // in any directory:         ... /files/Pictures
+        File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        // ... JPEG_2019...jpg
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",   /* suffix */
+                storageDir      /* directory */
+        );
+        // Save file path
+        currentPhotoPath = image.getAbsolutePath();
+        return image;
+    }
+
+    public void testCache() {
+        File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        System.out.println("Pfad: " + storageDir.getAbsolutePath());
+        File[] dateien = storageDir.listFiles();
+        for (File f : dateien)
+            System.out.println("Datei:" + f.getAbsolutePath());
+    }
 
 
     AdapterView.OnItemSelectedListener spinnerocl = new AdapterView.OnItemSelectedListener() {
@@ -51,12 +138,12 @@ public class ImmobilieAnlegen extends Fragment {
         public void onClick(View v) {
             int id = v.getId();
             if(id == R.id.fotoButton) {
-
+                dispatchTakePictureIntent();
             }
             if(id == R.id.button_commit) {
                 try {
                     createImmobilie();
-                } catch (Exception e) {
+                } catch (NumberFormatException e) {
                     StyleableToast.makeText(getContext(),"Fehlendes Attribut!", R.style.MissingArgumentToast).show();
                 }
             }
@@ -74,11 +161,11 @@ public class ImmobilieAnlegen extends Fragment {
         init();
     }
 
-    public void createImmobilie() throws Exception{
+    private void createImmobilie() throws NumberFormatException{
         int anzZimmer, groeße;
         String standort, bezeichnung;
         double maklerProv, preis;
-        Bitmap bild;
+        String bildpfad;
 
 
         anzZimmer = Integer.parseInt(editText_anzZimmer.getText().toString());
@@ -87,9 +174,14 @@ public class ImmobilieAnlegen extends Fragment {
         bezeichnung = editText_bez.getText().toString();
         maklerProv = Double.parseDouble(editText_maklerProv.getText().toString());
         preis = Double.parseDouble(editText_preis.getText().toString());
-        bild = ((BitmapDrawable)fotoButton.getDrawable()).getBitmap();
 
-        Immobilien neueImmobilie = new Immobilien(groeße, anzZimmer, preis, maklerProv, bezeichnung, standort, mieten_kaufen, bild);
+        if(TextUtils.isEmpty(bezeichnung) || TextUtils.isEmpty(bezeichnung)) {
+            throw new NumberFormatException();
+        }
+
+        bildpfad = currentPhotoPath;
+
+        Immobilien neueImmobilie = new Immobilien(groeße, anzZimmer, preis, maklerProv, bezeichnung, standort, mieten_kaufen, bildpfad);
         makler.addImmobilie(neueImmobilie);
 
         intent = new Intent(ImmobilieAnlegen.this.getActivity(), Makler_Uebersicht.class);
