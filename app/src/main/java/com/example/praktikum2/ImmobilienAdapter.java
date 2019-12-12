@@ -3,7 +3,6 @@ package com.example.praktikum2;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,7 +46,7 @@ public class ImmobilienAdapter extends RecyclerView.Adapter<ImmobilienAdapter.Im
     @Override
     public ImmobilienViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         mContext = parent.getContext();
-        View v = LayoutInflater.from(mContext).inflate(R.layout.immobilien_item, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.immobilie_item_test, parent, false);
         ImmobilienViewHolder ivh = new ImmobilienViewHolder(v);
         return ivh;
     }
@@ -57,13 +56,14 @@ public class ImmobilienAdapter extends RecyclerView.Adapter<ImmobilienAdapter.Im
         boolean mieten = true;
 
         Immobilien currentImmo = mImmobilienListe.get(position);
-        if (currentImmo.getBildPfad() != null) {
-            holder.mImageView.setImageBitmap(Bitmap.createScaledBitmap(BitmapFactory.decodeFile(currentImmo.getBildPfad()), 512, 512, false));
-        } else {
-            holder.mImageView.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.default_foto));
+
+        if(currentImmo.getBildPfad() != null){
+            holder.mImageView.setImageBitmap(Bitmap.createScaledBitmap(BitmapFactory.decodeFile(currentImmo.getBildPfad()),2048,512,false));
+        }else{
+            holder.mImageView.setImageDrawable(ContextCompat.getDrawable(mContext,R.drawable.default_foto));
         }
 
-        holder.TextMeineImmo_anzZimmer.setText("Anz. Zimmer: " + currentImmo.getAnzZimmer());
+        holder.TextMeineImmo_anzZimmer.setText("Anzahl Zimmer: " + currentImmo.getAnzZimmer());
 
         if(currentImmo.getMieten_kaufen() == 'M') {
             holder.TextMeineImmo_mieten_kaufen.setText("Zu Mieten");
@@ -73,10 +73,14 @@ public class ImmobilienAdapter extends RecyclerView.Adapter<ImmobilienAdapter.Im
         }
 
         holder.TextMeineImmo_standort.setText(currentImmo.getStandort());
+
+
         holder.TextMeineImmo_maklerprov.setText(currentImmo.getMaklerProv() + "%");
+
+
         holder.TextMeineImmo_bez.setText(currentImmo.getBezeichnung());
         if(mieten) {
-            holder.TextMeineImmo_preis.setText((currentImmo.getPreis() + "€ p. M."));
+            holder.TextMeineImmo_preis.setText((currentImmo.getPreis() + "€ pro Monat"));
         } else {
             holder.TextMeineImmo_preis.setText(currentImmo.getPreis() + "€");
         }

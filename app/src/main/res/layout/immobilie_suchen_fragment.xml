@@ -7,13 +7,6 @@
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="-34dp">
 
-    <TextView
-        android:id="@+id/textView_Immobilie_Suchen"
-        android:layout_width="match_parent"
-        android:layout_height="79dp"
-        android:gravity="center"
-        android:text="@string/menu_Immobilie_Suchen"
-        android:textSize="36sp" />
 
     <TableLayout
         android:layout_width="match_parent"
@@ -161,7 +154,7 @@
     <Button
         android:id="@+id/button_suchen"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="@string/suchen"
         android:textSize="18sp"

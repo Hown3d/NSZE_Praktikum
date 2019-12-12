@@ -18,13 +18,19 @@ public class Kunde_Uebersicht extends AppCompatActivity implements NavigationVie
 
     //Navigation drawer
     private DrawerLayout drawer;
+    private Toolbar toolbar;
+    private Kunde kunde;
+    private Bundle kundenBundle;
+
+    Favoriten_Fragment favoriten;
+    Kunde_Suchen_Fragment suche;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kunde__uebersicht);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         //drawer finden und ihm ActionBarDrawerToggle hinzufügen
@@ -39,8 +45,21 @@ public class Kunde_Uebersicht extends AppCompatActivity implements NavigationVie
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        kunde = new Kunde("Peter");
+
+        kundenBundle = new Bundle();
+        kundenBundle.putParcelable("Kunde",kunde);
+
+        favoriten = new Favoriten_Fragment();
+        favoriten.setArguments(kundenBundle);
+
+        suche = new Kunde_Suchen_Fragment();
+        suche.setArguments(kundenBundle);
+
+        toolbar.setTitle("Favoriten");
+
         if(savedInstanceState == null){
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new Favoriten_Fragment()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,favoriten).commit();
         }
 
     }
@@ -52,10 +71,12 @@ public class Kunde_Uebersicht extends AppCompatActivity implements NavigationVie
         //Switch-case mit Menuitem id je nach dem welcher Menüeintrag angeklickt wurde das entsprechende Fragment öffnen
         switch (menuItem.getItemId()){
             case R.id.nav_Favoriten:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new Favoriten_Fragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, favoriten).commit();
+                toolbar.setTitle("Favoriten");
                 break;
             case R.id.nav_Immobilie_Suchen:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new Kunde_Suchen_Fragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, suche).commit();
+                toolbar.setTitle("Immobilie Suchen");
                 break;
             case R.id.nav_home:
                 intent = new Intent(Kunde_Uebersicht.this, MainActivity.class);
