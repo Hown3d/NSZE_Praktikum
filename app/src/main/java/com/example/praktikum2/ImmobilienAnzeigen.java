@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,14 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class ImmobilienAnzeigen extends Fragment {
@@ -29,19 +38,6 @@ public class ImmobilienAnzeigen extends Fragment {
     private Makler makler;
     private Bundle maklerbundle;
 
-//    View.OnClickListener fotoocl = new View.OnClickListener() {
-//        @Override
-//        public void onClick(View v) {
-//            //Makler Objekt in das Bundle legen
-//            maklerbundle.putParcelable("makler", makler);
-//            //Fragment erstellen
-//            Fragment immobilieAnzeigen_Detail = new ImmobilieAnlegen();
-//            //Bundle mit Makler Objekt an das Fragment attachen
-//            immobilieAnzeigen_Detail.setArguments(maklerbundle);
-//            //neues Fragment mit altem ersetzen
-//            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_makler, immobilieAnzeigen_Detail).commit();
-//        }
-//    };
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -49,9 +45,35 @@ public class ImmobilienAnzeigen extends Fragment {
         maklerbundle = getArguments();
         makler = maklerbundle.getParcelable("makler");
 
-        //testObjekte erstellen
-        if (makler.getMeineImmobilien().size() == 0)
-            makler.createTestImmobilien();
+        if (makler.getMeineImmobilien().size() == 0) {
+            //aus json Datei lesen
+            try {
+                String jsonline;
+                File jsonfile = new File(getActivity().getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS).getPath() + "/json_data.json");
+                BufferedReader jsonReader = new BufferedReader(new InputStreamReader(new FileInputStream(jsonfile)));
+                while ((jsonline = jsonReader.readLine()) != null) {
+                    JSONObject jsonObject = new JSONObject(jsonline);
+                    String bildfpad = null;
+                    try {
+                        bildfpad = jsonObject.getString("bildpfad");
+                    } catch (JSONException nobild) {
+                    }
+
+                    makler.addImmobilie(new Immobilien(jsonObject.getInt("groeße"),
+                            jsonObject.getInt("anzZimmer"),
+                            jsonObject.getDouble("preis"),
+                            jsonObject.getDouble("maklerProv"),
+                            jsonObject.getString("bezeichnung"),
+                            jsonObject.getString("standort"),
+                            jsonObject.getString("mieten_kaufen").charAt(0),
+                            bildfpad));
+
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.err.println("JsonFile konnte nicht gelesen werden");
+            }
+        }
 
         mRecylerView = view.findViewById(R.id.recyclerView);
         mRecylerView.setHasFixedSize(true);
@@ -67,6 +89,7 @@ public class ImmobilienAnzeigen extends Fragment {
 
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
     }
 
 
