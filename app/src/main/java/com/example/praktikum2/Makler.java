@@ -44,6 +44,7 @@ public class Makler implements Parcelable {
     public ArrayList<Immobilien> getMeineImmobilien() {
         return meineImmobilien;
     }
-
-
+    public void setMeineImmobilien(ArrayList<Immobilien> meineImmobilien) {
+        this.meineImmobilien = meineImmobilien;
+    }
 }

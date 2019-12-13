@@ -46,7 +46,7 @@ public class ImmobilienAdapter extends RecyclerView.Adapter<ImmobilienAdapter.Im
     @Override
     public ImmobilienViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         mContext = parent.getContext();
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.immobilie_item_test, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.immobilien_item_layout2, parent, false);
         ImmobilienViewHolder ivh = new ImmobilienViewHolder(v);
         return ivh;
     }
@@ -58,7 +58,8 @@ public class ImmobilienAdapter extends RecyclerView.Adapter<ImmobilienAdapter.Im
         Immobilien currentImmo = mImmobilienListe.get(position);
 
         if(currentImmo.getBildPfad() != null){
-            holder.mImageView.setImageBitmap(Bitmap.createScaledBitmap(BitmapFactory.decodeFile(currentImmo.getBildPfad()),2048,512,false));
+            holder.mImageView.setImageBitmap(Bitmap.createScaledBitmap(BitmapFactory.decodeFile(currentImmo.getBildPfad()),2048,2048,false));
+
         }else{
             holder.mImageView.setImageDrawable(ContextCompat.getDrawable(mContext,R.drawable.default_foto));
         }

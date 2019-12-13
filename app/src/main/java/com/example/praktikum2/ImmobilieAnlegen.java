@@ -54,6 +54,7 @@ public class ImmobilieAnlegen extends Fragment {
     private ImageButton fotoButton;
     private Makler makler;
     private Intent intent;
+    private JSONHandler jsonHandler;
     char mieten_kaufen;
 
     //PhotoIntent
@@ -159,37 +160,17 @@ public class ImmobilieAnlegen extends Fragment {
     };
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Bundle maklerbundle = getArguments();
-        makler = maklerbundle.getParcelable("makler");
         return inflater.inflate(R.layout.activity_immobilie_anlegen, container, false);
     }
 
-    public void onActivityCreated(Bundle maklerbundle) {
-        super.onActivityCreated(maklerbundle);
+    public void onActivityCreated(Bundle savedInstances) {
+        super.onActivityCreated(savedInstances);
+        Bundle maklerbundle = getArguments();
+        makler = maklerbundle.getParcelable("makler");
+        jsonHandler = new JSONHandler(getActivity());
         init();
     }
 
-    private void createJsonImmobilie(int anzZimmer, int groeße, String standort, String bezeichnung, double maklerProv, double preis, char Mmieten_kaufen, String bildpfad) throws Exception {
-        //Object persistieren
-        JSONObject jsonImmobilie = new JSONObject();
-
-        File storagedir = getActivity().getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS);
-        File jsonfile = new File(storagedir.getPath() + "/json_data.json");
-        OutputStreamWriter outputStreamWriter = new OutputStreamWriter(new FileOutputStream(jsonfile));
-
-
-        jsonImmobilie.put("groeße", groeße);
-        jsonImmobilie.put("anzZimmer", anzZimmer);
-        jsonImmobilie.put("preis",preis);
-        jsonImmobilie.put("maklerProv", maklerProv);
-        jsonImmobilie.put("bezeichnung", bezeichnung);
-        jsonImmobilie.put("standort", standort);
-        jsonImmobilie.put("mieten_kaufen", Mmieten_kaufen);
-        jsonImmobilie.put("bildpfad",bildpfad);
-
-        outputStreamWriter.append(jsonImmobilie.toString());
-        outputStreamWriter.close();
-    }
 
     private void createImmobilie() throws NumberFormatException{
         int anzZimmer, groeße;
@@ -212,7 +193,7 @@ public class ImmobilieAnlegen extends Fragment {
         Immobilien neueImmobilie = new Immobilien(groeße, anzZimmer, preis, maklerProv, bezeichnung, standort, mieten_kaufen, bildpfad);
 
         try {
-            createJsonImmobilie(anzZimmer, groeße, standort, bezeichnung, maklerProv, preis,mieten_kaufen,bildpfad);
+            jsonHandler.persistImmobilieToJSON(anzZimmer, groeße, standort, bezeichnung, maklerProv, preis, mieten_kaufen, bildpfad);
         } catch (Exception e) {
             e.printStackTrace();
             System.err.println("Can't safe this Immobilie as JSON");
