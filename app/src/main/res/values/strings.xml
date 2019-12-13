@@ -16,10 +16,9 @@
     <string name="action_settings">Settings</string>
 
     <string name="menu_home">Home</string>
-
     <string name="menu_Immobilie_Suchen">Immobilie Suchen</string>
-
     <string name="menu_Favoriten">Favoriten</string>
+
     <string name="menu_Immobilie_Erstellen">Immobilie Erstellen</string>
     <string name="menu_Meine_Immobilien">Meine Immobilien</string>
 
