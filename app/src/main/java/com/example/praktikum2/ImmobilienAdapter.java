@@ -78,7 +78,6 @@ public class ImmobilienAdapter extends RecyclerView.Adapter<ImmobilienAdapter.Im
 
         holder.TextMeineImmo_maklerprov.setText(currentImmo.getMaklerProv() + "%");
 
-
         holder.TextMeineImmo_bez.setText(currentImmo.getBezeichnung());
         if(mieten) {
             holder.TextMeineImmo_preis.setText((currentImmo.getPreis() + "€ pro Monat"));
@@ -93,4 +92,6 @@ public class ImmobilienAdapter extends RecyclerView.Adapter<ImmobilienAdapter.Im
     public int getItemCount() {
         return mImmobilienListe.size();
     }
+
+
 }

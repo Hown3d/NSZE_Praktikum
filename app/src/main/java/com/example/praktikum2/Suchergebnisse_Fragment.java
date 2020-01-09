@@ -9,23 +9,38 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 public class Suchergebnisse_Fragment extends Fragment {
     private int plz = 0;
     View v;
     TextView header;
+    ArrayList<Immobilien> immobilien;
 
-    public void setparams(int plz){
-        this.plz = plz;
-    }
+    boolean isVisible = false;
+
+    public void setparams(ArrayList<Immobilien> immos){immobilien =immos;}
+
+    public void setVisible(){isVisible = true;}
+    public void setInvisible(){isVisible = false;}
+    public boolean visible(){return isVisible;}
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         v =  inflater.inflate(R.layout.suchergebnisse_fragment,container,false);
 
-        header = v.findViewById(R.id.suchergebnisse_Header);
-        header.setText("Ergebnisse in " +plz);
+        RecyclerView mRecylerView = v.findViewById(R.id.recyclerView_Suchergebnisse);
+        mRecylerView.setHasFixedSize(true);
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+        ImmobilienAdapter mAdapter = new ImmobilienAdapter(getContext(),immobilien);
+
+        mRecylerView.setLayoutManager(mLayoutManager);
+        mRecylerView.setAdapter(mAdapter);
         return v;
     }
 }

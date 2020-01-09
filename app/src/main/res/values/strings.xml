@@ -36,5 +36,5 @@
     <string name="Plz">Postleitzahl</string>
     <string name="plz_Hint">65618</string>
 
-    <string name="suchen">Treffer gefunden</string>
+    <string name="suchen">Suchen</string>
 </resources>

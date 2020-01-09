@@ -44,7 +44,7 @@ public class JSONHandler {
                     jsonObject.getDouble("maklerProv"),
                     jsonObject.getString("bezeichnung"),
                     jsonObject.getString("standort"),
-                    jsonObject.getString("mieten_kaufen").charAt(0),
+                    (char)jsonObject.getInt("mieten_kaufen"), //character werden nur als Ascii wert gespeichert daher getint und cast zu character
                     bildfpad));
         }
         jsonReader.close();

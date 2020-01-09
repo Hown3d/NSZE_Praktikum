@@ -13,6 +13,8 @@ import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
 
+import java.util.ArrayList;
+
 //Implementiert Listener um fragments bzw Activisions zu öffnen wenn auf ein item im drawer Menü geklickt wird
 public class Kunde_Uebersicht extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -24,6 +26,7 @@ public class Kunde_Uebersicht extends AppCompatActivity implements NavigationVie
 
     Favoriten_Fragment favoriten;
     Kunde_Suchen_Fragment suche;
+    Suchergebnisse_Fragment results;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +47,8 @@ public class Kunde_Uebersicht extends AppCompatActivity implements NavigationVie
         //Navigantionview (Definiert in activity_Kunden_Übersicht.xml) finden und diese Klasse als Listener hinzufuegen
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        results = new Suchergebnisse_Fragment();
 
         kunde = new Kunde("Peter");
 
@@ -73,13 +78,16 @@ public class Kunde_Uebersicht extends AppCompatActivity implements NavigationVie
             case R.id.nav_Favoriten:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, favoriten).commit();
                 toolbar.setTitle("Favoriten");
+                results.setInvisible();
                 break;
             case R.id.nav_Immobilie_Suchen:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, suche).commit();
                 toolbar.setTitle("Immobilie Suchen");
+                results.setInvisible();
                 break;
             case R.id.nav_home:
                 intent = new Intent(Kunde_Uebersicht.this, MainActivity.class);
+                results.setInvisible();
                 startActivity(intent);
                 break;
             default:
@@ -91,11 +99,26 @@ public class Kunde_Uebersicht extends AppCompatActivity implements NavigationVie
         return false;
     }
 
+    //Methode um Suchergebnisse Anzuzeigen wird von Kune_suchen_Fragment aufgerufen
+    public void showResults(ArrayList<Immobilien> immobilien){
+        results.setparams(immobilien);
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, results).commit();
+        results.setVisible();
+        toolbar.setTitle("Suchergebnisse");
+    }
+
+
     //Falls zurück gerückt wird während das Menü offen ist soll das Menü geschlossen werden und nicht die Activity verlassen werden
     public void onBackPressed() {
         //wenn drawer sichtbar ist diesen schliessen ansonsten Activity verlassen
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
+        }else if(results.visible()){
+            //wenn Die Suchergebnisse Sichtbar sind soll zur Suche urückgekehrt werden
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, suche).commit();
+            toolbar.setTitle("Immobilie Suchen");
+            results.setInvisible();
         } else {
             super.onBackPressed();
         }
