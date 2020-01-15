@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Praktikum2</string>
+    <string name="app_name">ImmobilienScout 25</string>
 
     <string-array name="Optionen_Immobilie">
         <item>Kaufen</item>

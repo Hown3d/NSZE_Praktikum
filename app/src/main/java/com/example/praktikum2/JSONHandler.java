@@ -29,6 +29,11 @@ public class JSONHandler {
     public ArrayList<Immobilien> getImmobilienFromJSON() throws Exception {
         String jsonline;
         File jsonfile = new File(activity.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS).getPath() + "/json_data.json");
+
+        if(!jsonfile.exists()) {
+            jsonfile.createNewFile();
+        }
+
         BufferedReader jsonReader = new BufferedReader(new InputStreamReader(new FileInputStream(jsonfile)));
         while ((jsonline = jsonReader.readLine()) != null) {
             JSONObject jsonObject = new JSONObject(jsonline);

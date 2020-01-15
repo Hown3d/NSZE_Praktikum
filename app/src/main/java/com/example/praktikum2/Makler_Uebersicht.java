@@ -11,6 +11,9 @@ import androidx.fragment.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
+
 import com.google.android.material.navigation.NavigationView;
 
 public class Makler_Uebersicht extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
@@ -19,6 +22,7 @@ public class Makler_Uebersicht extends AppCompatActivity implements NavigationVi
     private Intent intent;
     private DrawerLayout drawer;
     private Bundle maklerbundle;
+    private ImageButton toolbarbutton;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +38,6 @@ public class Makler_Uebersicht extends AppCompatActivity implements NavigationVi
         } catch (Exception e) {
             e.printStackTrace();
         }
-
 
         //drawer finden und ihm ActionBarDrawerToggle hinzufügen
         drawer = findViewById(R.id.Makler_Uebersicht);
@@ -94,13 +97,6 @@ public class Makler_Uebersicht extends AppCompatActivity implements NavigationVi
 
     protected void onResume() {
         super.onResume();
-    }
-
-    public void init() {
-//        button_meineImmobilien = findViewById(R.id.button_meineImmobilien);
-//        button_neueImmobilie = findViewById(R.id.button_neueImmobilie);
-//        button_meineImmobilien.setOnClickListener(ocl);
-//        button_neueImmobilie.setOnClickListener(ocl);
     }
 
     //Falls zurück gerückt wird während das Menü offen ist soll das Menü geschlossen werden und nicht die Activity verlassen werden
